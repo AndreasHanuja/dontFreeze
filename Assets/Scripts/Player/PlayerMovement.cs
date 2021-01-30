@@ -21,7 +21,15 @@ public class PlayerMovement : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
 
-        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+        Vector3 cameraDirection = Camera.main.transform.forward;
+        cameraDirection.y = 0;
+        cameraDirection.Normalize();
+
+        Vector3 cameraDirectionRight = Camera.main.transform.right;
+        cameraDirectionRight.y = 0;
+        cameraDirectionRight.Normalize();
+
+        Vector3 direction = (cameraDirection * vertical + cameraDirectionRight * horizontal).normalized;
 
         // Animation transition should be inserted here
         if(direction.magnitude >= 0.1f)

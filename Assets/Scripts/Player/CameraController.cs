@@ -37,8 +37,9 @@ public class CameraController : MonoBehaviour
         Vector3 flatTargetPosition = target.position;
         flatTargetPosition.y = 0f;
         Vector3 finalPosition = flatTargetPosition + rotateVector;
+        transform.localRotation = Quaternion.Euler(transform.localRotation.eulerAngles.x, angle, 0);
 
         transform.position = Vector3.SmoothDamp(transform.position, finalPosition, ref refSmoothSpeed, smoothSpeed);
-        transform.LookAt(flatTargetPosition);
+        //transform.LookAt(flatTargetPosition);
     }
 }

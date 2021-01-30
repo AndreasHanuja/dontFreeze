@@ -21,9 +21,48 @@ namespace DontFreeze.MapEditor
         public string mapName;
         public Transform playerTransform;
 
-        private void Start()
+        private bool isGenerated = false;
+
+        private void Awake()
         {
             LoadMap();
+        }
+
+        private void Update()
+        {
+            if (isGenerated)
+                return;
+            isGenerated = true;
+
+            for (int i = 0; i < map.worldObjectLists.Count; i++)
+            {
+                int j = 0;
+                while (j < instantiationAmmount[i] && map.worldObjectLists[i].worldObjects.Count > 0)
+                {
+                    int pos = (int)Random.Range(0, map.worldObjectLists[i].worldObjects.Count - 0.1f);
+                    Vector3 estimatedPos = new Vector3(map.worldObjectLists[i].worldObjects[pos].x, map.worldObjectLists[i].worldObjects[pos].y, map.worldObjectLists[i].worldObjects[pos].z);
+                    FixGroundY(ref estimatedPos);
+                    switch (i)
+                    {
+                        case 3:
+                            playerTransform.position = estimatedPos + Vector3.up;
+                            break;
+                        case 0:
+                            GameObject tree = GameObject.Instantiate(objectPrefabs[i], tileInstanceParent);
+                            treeList.trees.Add(tree);
+                            tree.transform.position = estimatedPos;
+                            treeList.treeList.Add(tree.transform.position);
+                            map.worldObjectLists[i].worldObjects.RemoveAt(pos);
+                            break;
+                        default:
+                            GameObject g = GameObject.Instantiate(objectPrefabs[i], tileInstanceParent);
+                            g.transform.position = estimatedPos;
+                            map.worldObjectLists[i].worldObjects.RemoveAt(pos);
+                            break;
+                    }
+                    j++;
+                }
+            }
         }
 
         public void LoadMap()
@@ -77,43 +116,13 @@ namespace DontFreeze.MapEditor
                     t.yPosition = y;
                     CreateTile(t);
                 }
-            }
-
-            for(int i=0; i< map.worldObjectLists.Count; i++)
-            {
-                int j = 0;
-                while(j < instantiationAmmount[i] && map.worldObjectLists[i].worldObjects.Count > 0)
-                {
-                    int pos = (int)Random.Range(0, map.worldObjectLists[i].worldObjects.Count - 0.1f);
-                    Vector3 estimatedPos = new Vector3(map.worldObjectLists[i].worldObjects[pos].x, map.worldObjectLists[i].worldObjects[pos].y, map.worldObjectLists[i].worldObjects[pos].z);
-                    FixGroundY(ref estimatedPos);
-                    switch(i)
-                    {
-                        case 3:
-                            playerTransform.position = estimatedPos;
-                            break;
-                        case 0:
-                            GameObject tree = GameObject.Instantiate(objectPrefabs[i], tileInstanceParent);
-                            treeList.trees.Add(tree);
-                            treeList.treeList.Add(tree.transform.position);
-                            tree.transform.position = estimatedPos;
-                            map.worldObjectLists[i].worldObjects.RemoveAt(pos);
-                            break;
-                        default:
-                            GameObject g = GameObject.Instantiate(objectPrefabs[i], tileInstanceParent);
-                            g.transform.position = estimatedPos;
-                            map.worldObjectLists[i].worldObjects.RemoveAt(pos);
-                            break;
-                    }
-                    j++;
-                }
-            }
+            }            
         }
 
         private void FixGroundY(ref Vector3 estimatedPosition)
         {
             RaycastHit hit;
-            if(Physics.Raycast(new Ray(estimatedPosition+Vector3.up,Vector3.down),out hit, 2, groundMask))
+            if(Physics.Raycast(new Ray(estimatedPosition+Vector3.up,Vector3.down),out hit, 5, groundMask))
             {
                 estimatedPosition.y = hit.point.y;
             }                        
