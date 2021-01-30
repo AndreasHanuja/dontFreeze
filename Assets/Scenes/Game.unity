@@ -347,6 +347,7 @@ GameObject:
   m_Component:
   - component: {fileID: 215420969}
   - component: {fileID: 215420968}
+  - component: {fileID: 215420970}
   m_Layer: 0
   m_Name: Trees
   m_TagString: Untagged
@@ -367,6 +368,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeList: []
+  trees: []
 --- !u!4 &215420969
 Transform:
   m_ObjectHideFlags: 0
@@ -386,6 +388,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &215420970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 215420967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc01f54d4096c28418783dddb8c317ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  twigCount: 1
 --- !u!1001 &265251057
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -756,7 +771,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1121260826}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.99, z: 0}
+  m_LocalPosition: {x: 0, y: 1.81, z: 0}
   m_LocalScale: {x: 1.2, y: 1.8, z: 1.2}
   m_Children:
   - {fileID: 433787792}
@@ -777,7 +792,75 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1121260829}
   treeList: {fileID: 215420968}
-  distanceThreshold: 5
+  distanceToTreeThreshold: 3
+  distanceToCampFireThreShold: 5
+  campFireIncreaseRate: 1
+  campFireBonus: 5
+  campFire: {fileID: 853412614408095184, guid: c3cb2e8d198761c409398a901ab370cd, type: 3}
+--- !u!1 &1170850437
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1170850439}
+  - component: {fileID: 1170850438}
+  - component: {fileID: 1170850440}
+  m_Layer: 0
+  m_Name: Weather
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1170850438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1170850437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8fe0816db3c13458f5315ef02e1683, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  temperaturePenalty: 2.5
+  minimumTemp: 0
+  warningTempThreshold: 20
+  timeRate: 2.5
+--- !u!4 &1170850439
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1170850437}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.41999996, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1170850440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1170850437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4262fca1c61907748a8ae53b8b04def5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentTemperature: 50
+  campFires: []
+  player: {fileID: 1121260829}
+  campFireThreshold: 5
 --- !u!1001 &1301204550
 PrefabInstance:
   m_ObjectHideFlags: 0
