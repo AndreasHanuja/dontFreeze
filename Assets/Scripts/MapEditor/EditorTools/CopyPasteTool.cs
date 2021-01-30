@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,6 +14,9 @@ namespace DontFreeze.MapEditor.EditorTools
         private bool rightDown;
         private bool leftDown;
 
+        private Tile pointA;
+        private Tile pointB;
+
         public override void OnDeselect()
         {
             selectionCube.SetActive(false);
@@ -25,24 +29,27 @@ namespace DontFreeze.MapEditor.EditorTools
             selectionCube.transform.localPosition = startPos;
             selectionCube.transform.localScale = new Vector3(10, 1, 10);
             leftDown = true;
+            pointA = GetTile(toolManager.lastHitPosition);
+            pointB = null;
         }
 
         public override void OnLeftUp()
         {
             leftDown = false;
-            
+            pointB = GetTile(toolManager.lastHitPosition);
         }
 
         public override void OnRightDown()
         {
             rightDown = true;
-            
+            copyCube.SetActive(true);
         }
 
         public override void OnRightUp()
         {
             rightDown = false;
-            //toolManager.mapManager.CopyArea(int xMin, int yMin, int xMax, int yMax, int xPos, int yPos)
+            copyCube.SetActive(false);
+            toolManager.mapManager.CopyArea(pointA, pointB, GetTile(toolManager.lastHitPosition));
         }
 
         private void Update()
@@ -57,8 +64,8 @@ namespace DontFreeze.MapEditor.EditorTools
             if (rightDown)
             {
                 Vector3 currentPos = CurrentWorldPos();
-                copyCube.transform.localPosition = currentPos + new Vector3((selectionCube.transform.localScale.x%20)/10 * 5, 1, (selectionCube.transform.localScale.z % 20) / 10 * 5);
                 copyCube.transform.localScale = selectionCube.transform.localScale;
+                copyCube.transform.localPosition = currentPos + new Vector3(copyCube.transform.localScale.x/2, 0, copyCube.transform.localScale.z / 2);
             }
         }
 

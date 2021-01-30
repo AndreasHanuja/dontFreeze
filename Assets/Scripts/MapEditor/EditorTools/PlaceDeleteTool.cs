@@ -62,6 +62,7 @@ namespace DontFreeze.MapEditor.EditorTools
             if (isUpdated)
             {
                 Tile currentTile = GetTile(toolManager.lastHitPosition);
+                toolManager.mapManager.UpdateTile(currentTile);
                 foreach (Tile t in toolManager.mapManager.GetNeighbors(currentTile))
                 {
                     if(t != null)

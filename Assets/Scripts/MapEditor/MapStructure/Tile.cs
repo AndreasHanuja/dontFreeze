@@ -1,4 +1,5 @@
 ﻿using System.Xml.Serialization;
+using UnityEngine;
 
 namespace DontFreeze.MapEditor
 {
@@ -7,11 +8,12 @@ namespace DontFreeze.MapEditor
     public class Tile
     {
         [XmlAttribute("type")] public int type = 0;
-        [XmlAttribute("isMirrored")] public bool isMirrored = false;
+        [XmlAttribute("isMirrored")] public int mirrored = 0; // 0 none, 1 x, 2 y, 3 both
         [XmlAttribute("rotation")] public int rotation = 0;
 
         public TileTypes tileType;
         public int xPosition;
         public int yPosition;
+        public GameObject gameObject;
     }
 }

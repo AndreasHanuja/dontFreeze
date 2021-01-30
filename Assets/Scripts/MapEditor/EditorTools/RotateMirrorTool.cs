@@ -23,7 +23,7 @@ namespace DontFreeze.MapEditor.EditorTools
         public override void OnRightDown()
         {
             Tile currentTile = GetTile(toolManager.lastHitPosition);
-            currentTile.isMirrored = !currentTile.isMirrored;
+            currentTile.mirrored = (currentTile.mirrored + 1) % 4;
         }
 
         public override void OnRightUp()

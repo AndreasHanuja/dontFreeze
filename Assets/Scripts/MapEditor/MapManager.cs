@@ -12,6 +12,9 @@ namespace DontFreeze.MapEditor
         public EditorUIManager editorUIManager;
         public ToolManager toolManager;
 
+        public GameObject[] tilePrefabs;
+        public Transform tileInstanceParent;
+
         private void Start()
         {
         }
@@ -29,6 +32,8 @@ namespace DontFreeze.MapEditor
             var stream = new FileStream(Application.dataPath + "/Resources/Maps/" + editorUIManager.nameInputField.text + ".xml", FileMode.Open);
             map = serializer.Deserialize(stream) as Map;
             stream.Close();
+
+            InitMap();
         }
 
         public bool FileExist(string mapName)
@@ -45,12 +50,17 @@ namespace DontFreeze.MapEditor
             map.tiles = new List<Tile>();
             for(int i=0; i<map.width * map.height; i++)
             {
-                map.tiles.Add(new Tile());
+                Tile t = new Tile();
+                t.rotation = (int)Random.Range(0, 3.99f);
+                t.mirrored = (int)Random.Range(0, 3.99f);
+                map.tiles.Add(t);
             }
 
-            toolManager.groundPlate.localPosition = new Vector3(map.width*5, 0, map.height*5);
+            toolManager.groundPlate.localPosition = new Vector3(map.width*5, 1, map.height*5);
             toolManager.groundPlate.localScale = new Vector3(map.width, 1, map.height);
             toolManager.groundPlate.GetComponent<Renderer>().material.mainTextureScale = new Vector2(map.width/2f, map.height/2f);
+
+            InitMap();
         }
 
         public Tile[] GetNeighbors(Tile t)
@@ -97,12 +107,213 @@ namespace DontFreeze.MapEditor
         {
             Tile[] neighbors = GetNeighbors(t);
 
-            //magic happens here!
+            switch (t.tileType) {
+                case TileTypes.EMPTY:
+                    t.type = 0;
+                    CreateTile(t);
+                    break;
+                case TileTypes.MOUNTAIN:
+                    t.type = 1;
+                    CreateTile(t);
+                    break;
+                case TileTypes.RIVER:
+                    MagicRivers(t, neighbors);
+                    CreateTile(t);
+                    break;
+            }
         }
 
-        public void CopyArea(int xMin, int yMin, int xMax, int yMax, int xPos, int yPos)
+        private void CreateTile(Tile t)
         {
+            if(t.gameObject != null)
+            {
+                Destroy(t.gameObject);
+            }
+            t.gameObject = GameObject.Instantiate(tilePrefabs[t.type], tileInstanceParent);
 
+            if (t.type == 0)
+            {
+                t.tileType = TileTypes.EMPTY;
+            }
+            else if (t.type == 1)
+            {
+                t.tileType = TileTypes.MOUNTAIN;
+            }
+            else
+            {
+                t.tileType = TileTypes.RIVER;
+            }
+
+            t.gameObject.transform.localPosition = new Vector3(10 * t.xPosition + 5, 0, 10 * t.yPosition + 5);
+            t.gameObject.transform.localRotation = Quaternion.Euler(-90, t.rotation * 90, 0);
+            t.gameObject.transform.localScale = new Vector3(t.mirrored % 3 == 1 ? -100 : 100, t.mirrored / 2 == 1 ? -100 : 100, 100);
+        }
+
+        private void InitMap()
+        {
+            foreach (Transform child in tileInstanceParent)
+            {
+                Destroy(child);
+            }
+            for(int x = 0; x < map.width; x++)
+            {
+                for (int y = 0; y < map.width; y++)
+                {
+                    Tile t = map.tiles[x + y * map.width];
+                    t.xPosition = x;
+                    t.yPosition = y;
+                    CreateTile(t);
+                }
+            }
+        }
+        public void CopyArea(Tile pointA, Tile pointB, Tile pointC)
+        {
+            int minX = Mathf.Min(pointA.xPosition, pointB.xPosition);
+            int maxX = Mathf.Max(pointA.xPosition, pointB.xPosition);
+            int minY = Mathf.Min(pointA.yPosition, pointB.yPosition);
+            int maxY = Mathf.Max(pointA.yPosition, pointB.yPosition);
+
+            for (int x = pointC.xPosition; x <= pointC.xPosition + (maxX - minX); x++)
+            {
+                for (int y = pointC.yPosition; y <= pointC.yPosition + (maxY - minY); y++)
+                {
+                    if (x >= 0 && x < map.width && y >= 0 && y < map.height)
+                    {
+                        Tile oldTile = map.tiles[minX + (x - pointC.xPosition) + (minY + (y - pointC.yPosition)) * map.width];
+                        Tile newTile = map.tiles[x + y * map.width];
+
+                        newTile.tileType = oldTile.tileType;
+                        UpdateTile(newTile);
+                    }
+                }
+            }
+
+            //update edges
+            for (int x = pointC.xPosition - 1; x <= pointC.xPosition + (maxX - minX) + 1; x++)
+            {
+                int y = pointC.yPosition - 1;
+                if (x >= 0 && x < map.width && y >= 0 && y < map.height)
+                    UpdateTile(map.tiles[x + y * map.width]);
+                y = pointC.yPosition + (maxY - minY) + 1;
+                if (x >= 0 && x < map.width && y >= 0 && y < map.height)
+                    UpdateTile(map.tiles[x + y * map.width]);
+            }
+            for (int y = pointC.yPosition; y <= pointC.yPosition + (maxY - minY); y++)
+            {
+                int x = pointC.xPosition - 1;
+                if (x >= 0 && x < map.width && y >= 0 && y < map.height)
+                    UpdateTile(map.tiles[x + y * map.width]);
+                x = pointC.xPosition + (maxX - minX) + 1;
+                if (x >= 0 && x < map.width && y >= 0 && y < map.height)
+                    UpdateTile(map.tiles[x + y * map.width]);
+            }
+        }
+
+        private void MagicRivers(Tile t, Tile[] neighbors)
+        {
+            int magicProduct = 1;
+            if (neighbors[0] != null && neighbors[0].tileType == TileTypes.RIVER)
+            {
+                magicProduct *= 2;
+            }
+            if (neighbors[1] != null && neighbors[1].tileType == TileTypes.RIVER)
+            {
+                magicProduct *= 3;
+            }
+            if (neighbors[2] != null && neighbors[2].tileType == TileTypes.RIVER)
+            {
+                magicProduct *= 5;
+            }
+            if (neighbors[3] != null && neighbors[3].tileType == TileTypes.RIVER)
+            {
+                magicProduct *= 7;
+            }
+            Debug.Log(magicProduct);
+            switch (magicProduct)
+            {
+                case 1:
+                    t.type = 2;
+                    t.rotation = (int)(Random.Range(0, 3.99f));
+                    t.mirrored   = (int)(Random.Range(0, 3.99f));
+                    //lake
+                    break;
+                case 2:
+                    //single arm lake
+                    t.type = 3;
+                    t.rotation = 3;
+                    t.mirrored = (Random.Range(0, 2)) < 1 ? 0 : 2;
+                    break;
+                case 3:
+                    t.type = 3;
+                    t.rotation = 2;
+                    t.mirrored = (Random.Range(0, 2)) < 1 ? 0 : 2;
+                    //single arm lake
+                    break;
+                case 5:
+                    t.type = 3;
+                    t.rotation = 1;
+                    t.mirrored = (Random.Range(0, 2)) < 1 ? 0 : 2;
+                    //single arm lake
+                    break;
+                case 7:
+                    t.type = 3;
+                    t.rotation = 0;
+                    t.mirrored = (Random.Range(0, 2)) < 1 ? 0 : 2;
+                    //single arm lake
+                    break;
+                case 6:
+                    t.type = 4;
+                    t.rotation = 1;
+                    t.mirrored = 0;
+                    //2 arm river curve
+                    break;
+                case 14:
+                    t.type = 4;
+                    t.rotation = 2;
+                    t.mirrored = 0;
+                    //2 arm river curve
+                    break;
+                case 15:
+                    t.type = 4;
+                    t.rotation = 0;
+                    t.mirrored = 0;
+                    //2 arm river curve
+                    break;
+                case 35:
+                    t.type = 4;
+                    t.rotation = 3;
+                    t.mirrored = 0;
+                    //2 arm river curve 
+                    break;
+                case 10:
+                    t.type = 5;
+                    t.rotation = Random.Range(0,1.99f)<1?1:3;
+                    t.mirrored = Random.Range(0, 1.99f) < 1 ? 1 : 3;
+                    //2 arm river
+                    break;
+                case 21:
+                    t.type = 5;
+                    t.rotation = Random.Range(0, 1.99f) < 1 ? 0 : 2;
+                    t.mirrored = Random.Range(0, 1.99f) < 1 ? 1 : 3;
+                    //2 arm river
+                    break;
+                case 30:
+                    //3 arm river
+                    break;
+                case 105:
+                    //3 arm river
+                    break;
+                case 70:
+                    //3 arm river
+                    break;
+                case 42:
+                    //3 arm river
+                    break;
+                case 210:
+                    //4 arm river
+                    break;
+            }
+            //TODO magic
         }
     }
 }

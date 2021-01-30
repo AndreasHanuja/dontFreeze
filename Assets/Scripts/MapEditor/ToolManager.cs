@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace DontFreeze.MapEditor
@@ -32,7 +33,8 @@ namespace DontFreeze.MapEditor
         {
             Ray r = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if(Physics.Raycast(r, out hit, Mathf.Infinity, groundMask)){
+            if(Physics.Raycast(r, out hit, Mathf.Infinity, groundMask) && EventSystem.current.currentSelectedGameObject == null)
+            {
                 lastHitPosition = Tuple.Create((int)hit.point.x / 10, (int)hit.point.z / 10);
 
                 if (Input.GetMouseButtonDown(0))
