@@ -81,7 +81,6 @@ public class Wolf : MonoBehaviour
         difPoint.y = 0;
         difPoint.Normalize();
         Debug.Log(Mathf.Asin(difPoint.x));
-        Mathf.
 
     }
     private void MoveForward()
