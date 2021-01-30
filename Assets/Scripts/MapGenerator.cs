@@ -13,10 +13,13 @@ namespace DontFreeze.MapEditor
         public GameObject[] tilePrefabs;
         public GameObject[] objectPrefabs;
         public int[] instantiationAmmount;
+        public LayerMask groundMask;
 
         public Transform tileInstanceParent;
+        public TreeList treeList;
 
         public string mapName;
+        public Transform playerTransform;
 
         private void Start()
         {
@@ -81,13 +84,39 @@ namespace DontFreeze.MapEditor
                 int j = 0;
                 while(j < instantiationAmmount[i] && map.worldObjectLists[i].worldObjects.Count > 0)
                 {
-                    j++;
                     int pos = (int)Random.Range(0, map.worldObjectLists[i].worldObjects.Count - 0.1f);
-                    GameObject g = GameObject.Instantiate(objectPrefabs[i], tileInstanceParent);
-                    g.transform.position = new Vector3(map.worldObjectLists[i].worldObjects[pos].x, map.worldObjectLists[i].worldObjects[pos].y, map.worldObjectLists[i].worldObjects[pos].z);
-                    map.worldObjectLists[i].worldObjects.RemoveAt(pos);
+                    Vector3 estimatedPos = new Vector3(map.worldObjectLists[i].worldObjects[pos].x, map.worldObjectLists[i].worldObjects[pos].y, map.worldObjectLists[i].worldObjects[pos].z);
+                    FixGroundY(ref estimatedPos);
+                    switch(i)
+                    {
+                        case 3:
+                            playerTransform.position = estimatedPos;
+                            break;
+                        case 0:
+                            GameObject tree = GameObject.Instantiate(objectPrefabs[i], tileInstanceParent);
+                            treeList.trees.Add(tree);
+                            treeList.treeList.Add(tree.transform.position);
+                            tree.transform.position = estimatedPos;
+                            map.worldObjectLists[i].worldObjects.RemoveAt(pos);
+                            break;
+                        default:
+                            GameObject g = GameObject.Instantiate(objectPrefabs[i], tileInstanceParent);
+                            g.transform.position = estimatedPos;
+                            map.worldObjectLists[i].worldObjects.RemoveAt(pos);
+                            break;
+                    }
+                    j++;
                 }
             }
+        }
+
+        private void FixGroundY(ref Vector3 estimatedPosition)
+        {
+            RaycastHit hit;
+            if(Physics.Raycast(new Ray(estimatedPosition+Vector3.up,Vector3.down),out hit, 2, groundMask))
+            {
+                estimatedPosition.y = hit.point.y;
+            }                        
         }
     }
 }

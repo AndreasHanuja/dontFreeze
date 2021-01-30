@@ -97,7 +97,8 @@ GameObject:
   - component: {fileID: 6450750227246894403}
   - component: {fileID: 7938281203870548710}
   - component: {fileID: 5318337725731812908}
-  m_Layer: 0
+  - component: {fileID: 7145526436857094812}
+  m_Layer: 8
   m_Name: WaterCrossingTile 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,3 +170,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &7145526436857094812
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5966842397259339769}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -6712727816238316014, guid: d6c74942791c9404ea96d77eee7c9c77, type: 3}

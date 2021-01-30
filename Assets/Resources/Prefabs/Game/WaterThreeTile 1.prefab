@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 2920621087042547879}
   - component: {fileID: 2245038860157370114}
   - component: {fileID: 4090127984410774472}
-  m_Layer: 0
+  - component: {fileID: -4927746011968542497}
+  m_Layer: 8
   m_Name: WaterThreeTile 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,6 +84,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &-4927746011968542497
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2577169266136574493}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -3323204093544298087, guid: 1e3fde05002d0ab4fbd3209e3793e42e, type: 3}
 --- !u!1 &6792439208259382197
 GameObject:
   m_ObjectHideFlags: 0

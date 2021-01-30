@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 3937425079614666344}
   - component: {fileID: 75242513717950925}
   - component: {fileID: 2805645686479686919}
-  m_Layer: 0
+  - component: {fileID: 4490999549798726892}
+  m_Layer: 8
   m_Name: WaterBridgeTile 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,6 +85,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &4490999549798726892
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4462886443648625874}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1074950398761088755, guid: 4365db6a1707bea43ab7aef2b1f11f5a, type: 3}
 --- !u!1 &5744547453982150812
 GameObject:
   m_ObjectHideFlags: 0
