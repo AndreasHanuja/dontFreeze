@@ -15,5 +15,10 @@ namespace DontFreeze.MapEditor
         [XmlArray("Tiles")]
         [XmlArrayItem("Tile")]
         public List<Tile> tiles = new List<Tile>();
+
+        [XmlArray("WorldObjectListss")]
+        [XmlArrayItem("WorldObjectList")]
+        public List<WorldObjectList> worldObjectLists = new List<WorldObjectList>();
+
     }
 }

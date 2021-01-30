@@ -60,6 +60,26 @@ namespace DontFreeze.MapEditor
             toolManager.groundPlate.localScale = new Vector3(map.width, 1, map.height);
             toolManager.groundPlate.GetComponent<Renderer>().material.mainTextureScale = new Vector2(map.width/2f, map.height/2f);
 
+            WorldObjectList treeList = new WorldObjectList();
+            treeList.type = 0;
+            map.worldObjectLists.Add(treeList);
+
+            WorldObjectList worlfList = new WorldObjectList();
+            worlfList.type = 1;
+            map.worldObjectLists.Add(worlfList);
+
+            WorldObjectList waypointList = new WorldObjectList();
+            worlfList.type = 2;
+            map.worldObjectLists.Add(waypointList);
+
+            WorldObjectList spawnPointList = new WorldObjectList();
+            worlfList.type = 3;
+            map.worldObjectLists.Add(spawnPointList);
+
+            WorldObjectList housePointList = new WorldObjectList();
+            worlfList.type = 4;
+            map.worldObjectLists.Add(housePointList);
+
             InitMap();
         }
 
@@ -184,6 +204,13 @@ namespace DontFreeze.MapEditor
 
                         newTile.tileType = oldTile.tileType;
                         UpdateTile(newTile);
+                        foreach (Tile t in toolManager.mapManager.GetNeighbors(newTile))
+                        {
+                            if (t != null)
+                            {
+                                toolManager.mapManager.UpdateTile(t);
+                            }
+                        }
                     }
                 }
             }
@@ -228,7 +255,6 @@ namespace DontFreeze.MapEditor
             {
                 magicProduct *= 7;
             }
-            Debug.Log(magicProduct);
             switch (magicProduct)
             {
                 case 1:
