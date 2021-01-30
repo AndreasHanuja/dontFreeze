@@ -74,9 +74,7 @@ namespace DontFreeze.MapEditor.EditorTools
                 {
                     WorldObject worldObject = hit.collider.gameObject.GetComponent<HackyObjectReference>().worldObject;
                     toolManager.mapManager.map.worldObjectLists[hit.collider.gameObject.GetComponent<HackyObjectReference>().type].worldObjects.Remove(worldObject);
-
-
-                    Destroy(hit.collider.gameObject.transform.parent);
+                    Destroy(hit.collider.gameObject.transform.parent.gameObject);
                 }
             }
         }
