@@ -39,15 +39,36 @@ namespace DontFreeze.MapEditor.EditorTools
 
         private void Update()
         {
+            bool isUpdated = false;
             if (leftDown)
             {
                 Tile currentTile = GetTile(toolManager.lastHitPosition);
-                currentTile.type = placeType.value;
+                if(currentTile.tileType != (TileTypes)(placeType.value + 1))
+                {
+                    currentTile.tileType = (TileTypes)(placeType.value + 1);
+                    isUpdated = true;
+                }
             }
             else if (rightDown)
             {
                 Tile currentTile = GetTile(toolManager.lastHitPosition);
-                currentTile.type = 0;
+                if (currentTile.tileType != TileTypes.EMPTY)
+                {
+                    currentTile.tileType = TileTypes.EMPTY;
+                    isUpdated = true;
+                }
+            }
+
+            if (isUpdated)
+            {
+                Tile currentTile = GetTile(toolManager.lastHitPosition);
+                foreach (Tile t in toolManager.mapManager.GetNeighbors(currentTile))
+                {
+                    if(t != null)
+                    {
+                        toolManager.mapManager.UpdateTile(t);
+                    }
+                }
             }
         }
 

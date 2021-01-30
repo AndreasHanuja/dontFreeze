@@ -52,5 +52,57 @@ namespace DontFreeze.MapEditor
             toolManager.groundPlate.localScale = new Vector3(map.width, 1, map.height);
             toolManager.groundPlate.GetComponent<Renderer>().material.mainTextureScale = new Vector2(map.width/2f, map.height/2f);
         }
+
+        public Tile[] GetNeighbors(Tile t)
+        {
+            Tile[] output = new Tile[4];
+            if (t.yPosition < map.height - 1)
+            {
+                output[0] = map.tiles[t.xPosition + (t.yPosition + 1) * map.width];
+            }
+            else
+            {
+                output[0] = null;
+            }
+
+            if (t.xPosition > 0)
+            {
+                output[1] = map.tiles[t.xPosition - 1 + t.yPosition * map.width];
+            }
+            else
+            {
+                output[1] = null;
+            }
+
+            if (t.yPosition > 0)
+            {
+                output[2] = map.tiles[t.xPosition + (t.yPosition - 1) * map.width];
+            }
+            else
+            {
+                output[2] = null;
+            }
+
+            if (t.xPosition < map.width - 1)
+            {
+                output[3] = map.tiles[t.xPosition + 1 + t.yPosition * map.width];
+            }
+            else
+            {
+                output[3] = null;
+            }
+            return output;
+        }
+        public void UpdateTile(Tile t)
+        {
+            Tile[] neighbors = GetNeighbors(t);
+
+            //magic happens here!
+        }
+
+        public void CopyArea(int xMin, int yMin, int xMax, int yMax, int xPos, int yPos)
+        {
+
+        }
     }
 }

@@ -30,19 +30,19 @@ namespace DontFreeze.MapEditor.EditorTools
         public override void OnLeftUp()
         {
             leftDown = false;
-            //mark second corner selection cube
+            
         }
 
         public override void OnRightDown()
         {
             rightDown = true;
-            //show copy cube
+            
         }
 
         public override void OnRightUp()
         {
             rightDown = false;
-            //copy
+            //toolManager.mapManager.CopyArea(int xMin, int yMin, int xMax, int yMax, int xPos, int yPos)
         }
 
         private void Update()
