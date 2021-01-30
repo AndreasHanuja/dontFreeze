@@ -324,18 +324,33 @@ namespace DontFreeze.MapEditor
                     //2 arm river
                     break;
                 case 30:
+                    t.type = 6;
+                    t.rotation = 1;
+                    t.mirrored = 0;
                     //3 arm river
                     break;
                 case 105:
+                    t.type = 6;
+                    t.rotation = 0;
+                    t.mirrored = 0;
                     //3 arm river
                     break;
                 case 70:
+                    t.type = 6;
+                    t.rotation = 3;
+                    t.mirrored = 0;
                     //3 arm river
                     break;
                 case 42:
+                    t.type = 6;
+                    t.rotation = 2;
+                    t.mirrored = 0;
                     //3 arm river
                     break;
                 case 210:
+                    t.type = 7;
+                    t.rotation = (int)Random.Range(0,3.99f);
+                    t.mirrored = (int)Random.Range(0, 3.99f);
                     //4 arm river
                     break;
             }

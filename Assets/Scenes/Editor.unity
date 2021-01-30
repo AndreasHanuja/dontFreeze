@@ -863,12 +863,12 @@ MonoBehaviour:
   tilePrefabs:
   - {fileID: 4758667080019131849, guid: 4b6b1c1f412db7d49b93e29ec6e2f0f6, type: 3}
   - {fileID: 4894704979605171710, guid: a299fa1e198be9f4caa6c2eea1cf1b95, type: 3}
-  - {fileID: 3859706913816315221, guid: 9b12b8a06a9791747a8bc2923668cbc3, type: 3}
+  - {fileID: 6747541096296513494, guid: d03e7f4e5981b6644a1d768dcab68cc5, type: 3}
   - {fileID: 3859706913816315221, guid: 9b12b8a06a9791747a8bc2923668cbc3, type: 3}
   - {fileID: 2036379355377915437, guid: c82fbc027c4999241aedcf22f3b6fe0f, type: 3}
   - {fileID: 7274758752389336124, guid: 4dad72fbf430a8c4b93ac8a73d9cdb8a, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2577169266136574493, guid: 9bfcb8078f99bcc45950415351db61fe, type: 3}
+  - {fileID: 5966842397259339769, guid: 661a014f02135d24aa523e291ecb1269, type: 3}
   tileInstanceParent: {fileID: 1824291694}
 --- !u!1 &173160951
 GameObject:
@@ -949,6 +949,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 173160951}
   m_CullTransparentMesh: 0
+--- !u!1 &190409579
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 190409582}
+  - component: {fileID: 190409581}
+  m_Layer: 0
+  m_Name: SpawnRemoveTool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &190409581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190409579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f09dff1c6158e64a9c9896dfdf3cdaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toolManager: {fileID: 991465638}
+  placeType: {fileID: 680375212}
+  prefabs: []
+--- !u!4 &190409582
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190409579}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 991465637}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &206912429
 GameObject:
   m_ObjectHideFlags: 0
@@ -2843,9 +2889,15 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: Water
+    - m_Text: Tree
       m_Image: {fileID: 0}
-    - m_Text: Mountain
+    - m_Text: Wolf
+      m_Image: {fileID: 0}
+    - m_Text: Waypoint
+      m_Image: {fileID: 0}
+    - m_Text: SpawnPoint
+      m_Image: {fileID: 0}
+    - m_Text: HousePoint
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3360,7 +3412,7 @@ GameObject:
   m_Component:
   - component: {fileID: 813999642}
   m_Layer: 0
-  m_Name: Build/Delete (1)
+  m_Name: Spawn/Remove
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3857,6 +3909,8 @@ Transform:
   - {fileID: 1083407771}
   - {fileID: 793775982}
   - {fileID: 527055288}
+  - {fileID: 190409582}
+  - {fileID: 1452404078}
   m_Father: {fileID: 113187633}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3876,6 +3930,7 @@ MonoBehaviour:
   editorTools:
   - {fileID: 1083407772}
   - {fileID: 793775983}
+  - {fileID: 0}
   groundMask:
     serializedVersion: 2
     m_Bits: 256
@@ -5793,6 +5848,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1436286586}
   m_CullTransparentMesh: 0
+--- !u!1 &1452404077
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1452404078}
+  - component: {fileID: 1452404079}
+  m_Layer: 0
+  m_Name: BridgeWaterTool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1452404078
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1452404077}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 991465637}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1452404079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1452404077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e83d09298c005f4c9a0150fbbbc320c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toolManager: {fileID: 991465638}
 --- !u!1 &1533524438
 GameObject:
   m_ObjectHideFlags: 0
@@ -6914,6 +7013,8 @@ MonoBehaviour:
     - m_Text: Copy | Paste
       m_Image: {fileID: 0}
     - m_Text: Spawn | Remove
+      m_Image: {fileID: 0}
+    - m_Text: Bridge | Water
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
