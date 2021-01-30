@@ -7,6 +7,8 @@ public class PlayerMovement : MonoBehaviour
 
     public CharacterController controller;
 
+    public Transform cam;
+
     public float speed = 6f;
 
     public float turnSmoothTime = 0.1f;
@@ -29,7 +31,9 @@ public class PlayerMovement : MonoBehaviour
 
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
-            controller.Move(direction * speed * Time.deltaTime);
+            Vector3 moveDir = Quaternion.Euler(0.0f, targetangle, 0.0f) * Vector3.forward;
+
+            controller.Move(moveDir.normalized * speed * Time.deltaTime);
         }
 
     }
