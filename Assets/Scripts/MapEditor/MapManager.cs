@@ -312,13 +312,15 @@ namespace DontFreeze.MapEditor
                     //2 arm river curve 
                     break;
                 case 10:
-                    t.type = 5;
+                    if(t.type != 8)
+                        t.type = 5;
                     t.rotation = Random.Range(0,1.99f)<1?1:3;
                     t.mirrored = Random.Range(0, 1.99f) < 1 ? 1 : 3;
                     //2 arm river
                     break;
                 case 21:
-                    t.type = 5;
+                    if (t.type != 8)
+                        t.type = 5;
                     t.rotation = Random.Range(0, 1.99f) < 1 ? 0 : 2;
                     t.mirrored = Random.Range(0, 1.99f) < 1 ? 1 : 3;
                     //2 arm river

@@ -40,11 +40,21 @@ namespace DontFreeze.MapEditor.EditorTools
         {
             if (leftDown)
             {
-               //TODO
+                Tile t = GetTile(toolManager.lastHitPosition);
+                if(t.type == 5)
+                {
+                    t.type = 8;
+                    toolManager.mapManager.UpdateTile(t);
+                }
             }
             else if (rightDown)
             {
-              //TODO
+                Tile t = GetTile(toolManager.lastHitPosition);
+                if (t.type == 8)
+                {
+                    t.type = 5;
+                    toolManager.mapManager.UpdateTile(t);
+                }
             }
         }
 

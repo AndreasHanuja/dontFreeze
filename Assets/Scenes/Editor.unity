@@ -869,6 +869,7 @@ MonoBehaviour:
   - {fileID: 7274758752389336124, guid: 4dad72fbf430a8c4b93ac8a73d9cdb8a, type: 3}
   - {fileID: 2577169266136574493, guid: 9bfcb8078f99bcc45950415351db61fe, type: 3}
   - {fileID: 5966842397259339769, guid: 661a014f02135d24aa523e291ecb1269, type: 3}
+  - {fileID: 2467601732467836137, guid: e8b4a13a55b62a3468e56b4137883c74, type: 3}
   tileInstanceParent: {fileID: 1824291694}
 --- !u!1 &173160951
 GameObject:
@@ -979,8 +980,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toolManager: {fileID: 991465638}
+  objectMask:
+    serializedVersion: 2
+    m_Bits: 512
   placeType: {fileID: 680375212}
-  prefabs: []
+  prefabs:
+  - {fileID: 7360300981118888825, guid: 285d86d018148f947962a80825329106, type: 3}
+  - {fileID: 2527167693954781318, guid: b73060410d654d84a9afa9934efc066f, type: 3}
+  - {fileID: 1482456098555483386, guid: 5e05bd182d16cdc4b84db2b7187542f5, type: 3}
+  - {fileID: 4758363429159291888, guid: bb31205e96d6656439b3c5a9b0b9ffd7, type: 3}
+  - {fileID: 5863607854879993391, guid: dc45e34a81555984cb7edd0b9b3d65ed, type: 3}
 --- !u!4 &190409582
 Transform:
   m_ObjectHideFlags: 0
@@ -3930,7 +3939,8 @@ MonoBehaviour:
   editorTools:
   - {fileID: 1083407772}
   - {fileID: 793775983}
-  - {fileID: 0}
+  - {fileID: 190409581}
+  - {fileID: 1452404079}
   groundMask:
     serializedVersion: 2
     m_Bits: 256
