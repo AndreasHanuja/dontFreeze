@@ -34,6 +34,12 @@ public class Interaction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //check if a tree is close to you? -> set some boolean (isChopTreeMode) & exchange the Icon of the ability to chop tree/place campfire (if place campfire and you dont have wood grey the icon out)
+
+        //if isChopTreeMode and Input.GetKeyDown(KeyCode.E) -> chopTree
+        //else if not isChopTreeMode and Input.GetKeyDown(KeyCode.E) and you have wood -> PutDownCampFire
+
+
         ChopTree();
 
         PutDownCampFire();
