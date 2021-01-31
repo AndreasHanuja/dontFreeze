@@ -28,8 +28,11 @@ public class Wolf : MonoBehaviour
 
     private Vector3 currentTargetPoint;
 
-    public float currentMoveSpeed;
+    public float walkSpeed;
+    public float runSpeed;
+    private float currentMoveSpeed;
     public float currentRotationSpeed;
+    public Animator animator;
 
     private void Start() {
         spawnPoint = transform.position;
@@ -63,16 +66,23 @@ public class Wolf : MonoBehaviour
     {
         if (Vector3.SqrMagnitude(player.transform.position - transform.position) > looseAgroDistance * looseAgroDistance)
         {
+            currentMoveSpeed = walkSpeed;
+            animator.SetBool("walk", true);
             currentMode = WolfStates.IDLE;
         }
             
         if (currentMode == WolfStates.IDLE && Vector3.SqrMagnitude(player.transform.position - transform.position) < playerAggroDistance * playerAggroDistance)
         {
+            currentMoveSpeed = runSpeed;
+            animator.SetBool("walk", false);
             currentMode = WolfStates.CHAISE;
         }        
 
         if (currentMode == WolfStates.CHAISE && Vector3.SqrMagnitude(player.transform.position - transform.position) < circleDistance * circleDistance)
         {
+            currentMoveSpeed = runSpeed;
+            animator.SetBool("walk", false);
+
             currentMode = WolfStates.CIRCLE;
             circleStartTime = Time.timeSinceLevelLoad;
             circleClockwise = Random.Range(0, 2) < 1;
@@ -80,11 +90,15 @@ public class Wolf : MonoBehaviour
 
         if (currentMode == WolfStates.CHAISE && Vector3.SqrMagnitude(player.transform.position - transform.position) < circleDistance * circleDistance)
         {
+            currentMoveSpeed = runSpeed; animator.SetBool("walk", false);
+
             currentMode = WolfStates.CIRCLE;
         }
 
         if(currentMode == WolfStates.CIRCLE && Time.timeSinceLevelLoad - circleStartTime > circleDuration)
         {
+            currentMoveSpeed = runSpeed; animator.SetBool("walk", false);
+
             currentMode = WolfStates.ATTACK;
         }
 
@@ -95,7 +109,9 @@ public class Wolf : MonoBehaviour
         }
         if(minDistance< fearFireDistance * fearFireDistance)
         {
-            currentMode = WolfStates.FEARFIRE;
+            currentMoveSpeed = runSpeed;
+            currentMode = WolfStates.FEARFIRE; animator.SetBool("walk", false);
+
         }
     }
 
