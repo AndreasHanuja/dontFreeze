@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TemperatureManager : MonoBehaviour
 {
@@ -16,6 +17,12 @@ public class TemperatureManager : MonoBehaviour
 
     public float bonusIncreaseRate = 5.0f;
 
+    public GameObject gameOverUI;
+
+    public Image maskImage;
+
+    public Image fillImage;
+
     IEnumerator Start()
     {
         temperatureTemplate = TemperatureTemplate.instance;
@@ -23,6 +30,9 @@ public class TemperatureManager : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(timeRate);
+
+            SetFillAmount();
+
             if (!temperatureTemplate.isCampFireDown())
             {
                 DecreaseTemperature();
@@ -36,7 +46,7 @@ public class TemperatureManager : MonoBehaviour
                 // Gameover 
                 if(temperatureTemplate.currentTemperature <= minimumTemp )
                 {
-
+                    gameOverUI.SetActive(true);
                 }
             }
             else
@@ -60,5 +70,12 @@ public class TemperatureManager : MonoBehaviour
         temperatureTemplate.IncreaseTemperature(bonusIncreaseRate);
         Debug.Log(temperatureTemplate.currentTemperature);
 
+    }
+
+    void SetFillAmount()
+    {
+        float fillImageAmount = temperatureTemplate.currentTemperature / temperatureTemplate.maxTemperature;
+
+        fillImage.fillAmount = fillImageAmount;
     }
 }
