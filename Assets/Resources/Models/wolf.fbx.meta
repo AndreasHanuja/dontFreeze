@@ -45,6 +45,9 @@ ModelImporter:
   - first:
       74: -5084531080009022758
     second: Armature|WolfRun
+  - first:
+      74: -5246000122748371506
+    second: Armature|WolfWalk
   externalObjects: {}
   materials:
     materialImportMode: 1
