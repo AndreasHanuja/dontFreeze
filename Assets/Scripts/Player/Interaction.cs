@@ -153,8 +153,8 @@ public class Interaction : MonoBehaviour
             Vector3 nearestTree = treeList.treeList[closestTreeIndex];
             GameObject tree = treeList.trees[closestTreeIndex];
 
-            playerMovement.blockMovementUntil = Time.realtimeSinceStartup + 1;
-            blockInteractionUntil = Time.realtimeSinceStartup + 1;
+            playerMovement.blockMovementUntil = Time.realtimeSinceStartup + 0.7f;
+            blockInteractionUntil = Time.realtimeSinceStartup + 0.7f;
             playerAnimator.SetTrigger("Chop");
 
             if(tree.GetComponent<Tree>().HitTree()){

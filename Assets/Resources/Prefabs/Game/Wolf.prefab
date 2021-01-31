@@ -514,13 +514,13 @@ MonoBehaviour:
   currentMode: 0
   player: {fileID: 0}
   campFires: []
-  playerAggroDistance: 8
-  circleDistance: 4
-  circleDuration: 10
-  fearFireDistance: 6
+  playerAggroDistance: 13
+  circleDistance: 4.5
+  circleDuration: 8
+  fearFireDistance: 7
   maxMoveTime: 3
-  maxIdleDistance: 6
-  looseAgroDistance: 12
+  maxIdleDistance: 12
+  looseAgroDistance: 15
   currentMoveSpeed: 8.5
   currentRotationSpeed: 360
 --- !u!1 &3002953514451360295
