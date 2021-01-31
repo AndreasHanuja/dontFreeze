@@ -521,8 +521,10 @@ MonoBehaviour:
   maxMoveTime: 3
   maxIdleDistance: 12
   looseAgroDistance: 15
-  currentMoveSpeed: 8.5
+  walkSpeed: 2
+  runSpeed: 8.5
   currentRotationSpeed: 360
+  animator: {fileID: 1022485454005486953}
 --- !u!1 &3002953514451360295
 GameObject:
   m_ObjectHideFlags: 0
