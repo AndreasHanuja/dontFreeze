@@ -1942,9 +1942,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1121260829}
-  height: 12
-  distance: 9.8
-  angle: 1
+  height: 8.7
+  distance: 7.24
+  angle: 7.0032816
   smoothSpeed: 0.25
   rotationSpeed: 7
 --- !u!1 &939253956
@@ -2423,7 +2423,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 902e4d81c2569de498c0c98db05e23aa, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.135
+  m_Volume: 0.068
   m_Pitch: 1
   Loop: 1
   Mute: 0

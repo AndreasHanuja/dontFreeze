@@ -156,8 +156,9 @@ public class Interaction : MonoBehaviour
             playerMovement.blockMovementUntil = Time.realtimeSinceStartup + 0.7f;
             blockInteractionUntil = Time.realtimeSinceStartup + 0.7f;
             playerAnimator.SetTrigger("Chop");
+            //TODO play sound
 
-            if(tree.GetComponent<Tree>().HitTree()){
+            if (tree.GetComponent<Tree>().HitTree()){
                 treeList.treeList.Remove(nearestTree);
                 treeList.trees.Remove(tree);
             }
@@ -197,5 +198,4 @@ public class Interaction : MonoBehaviour
         campfire.transform.position = Vector3.Slerp(transform.position, campfirePos, 1);
         campfire.transform.GetChild(0).gameObject.SetActive(true);
     }
-
 }
