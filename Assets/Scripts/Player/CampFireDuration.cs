@@ -32,7 +32,7 @@ public class CampFireDuration : MonoBehaviour
         }
         transform.GetChild(2).gameObject.SetActive(false);
         transform.GetChild(3).gameObject.SetActive(false);
-
+        gameObject.GetComponent<AudioSource>().enabled = false;
         temperatureTemplate.campFires.Remove(this.gameObject);
     }
 }

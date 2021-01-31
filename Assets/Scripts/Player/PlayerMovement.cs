@@ -54,6 +54,15 @@ public class PlayerMovement : MonoBehaviour
             Vector3 moveDir = Quaternion.Euler(0.0f, targetangle, 0.0f) * Vector3.forward;
 
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
+            if (!gameObject.GetComponent<AudioSource>().isPlaying)
+            {
+                gameObject.GetComponent<AudioSource>().Play();
+            }
+        }
+        else
+        {
+            gameObject.GetComponent<AudioSource>().Pause();
+
         }
 
         RaycastHit hit;
