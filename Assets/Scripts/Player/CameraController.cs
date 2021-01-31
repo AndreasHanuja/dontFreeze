@@ -16,6 +16,9 @@ public class CameraController : MonoBehaviour
     public float smoothSpeed = 0.5f;
     Vector3 refSmoothSpeed;
 
+    private bool isIncreasing;
+    public float rotationSpeed;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +28,9 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!target)
+        angle += (isIncreasing ? 1 : -1) * (rotationSpeed * Time.deltaTime * TemperatureManager.coldPercentage);
+
+        if (!target)
         {
             return;
         }
@@ -41,5 +46,10 @@ public class CameraController : MonoBehaviour
 
         transform.position = Vector3.SmoothDamp(transform.position, finalPosition, ref refSmoothSpeed, smoothSpeed);
         //transform.LookAt(flatTargetPosition);
+    }
+
+    private void FixedUpdate()
+    {
+        isIncreasing = Random.Range(0, 500) < 5 ? !isIncreasing : isIncreasing;
     }
 }

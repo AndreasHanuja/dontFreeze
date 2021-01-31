@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class TemperatureManager : MonoBehaviour
 {
+    public static float coldPercentage;
+
     TemperatureTemplate temperatureTemplate;
 
     public float temperaturePenalty = 2.5f;
@@ -23,12 +25,26 @@ public class TemperatureManager : MonoBehaviour
 
     public Image fillImage;
 
+    public bool isReading = true;
+
+    public void FinishReading()
+    {
+        isReading = false;
+    }
+
     IEnumerator Start()
     {
         temperatureTemplate = TemperatureTemplate.instance;
 
         while (true)
         {
+            if (isReading)
+            {
+                yield return new WaitForEndOfFrame();
+                continue;
+            }
+
+            coldPercentage = 1 - Mathf.Clamp01((temperatureTemplate.currentTemperature/ temperatureTemplate.maxTemperature)*1.5f -0.25f);
             yield return new WaitForSeconds(timeRate);
 
             SetFillAmount();
@@ -36,9 +52,8 @@ public class TemperatureManager : MonoBehaviour
             if (!temperatureTemplate.isCampFireDown())
             {
                 DecreaseTemperature();
-
                 //Enable warning signal for UI?
-                if(temperatureTemplate.currentTemperature < warningTempThreshold)
+                if (temperatureTemplate.currentTemperature < warningTempThreshold)
                 {
                     Debug.Log("Warning");
                 }

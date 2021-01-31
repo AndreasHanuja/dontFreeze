@@ -46,6 +46,7 @@ public class Interaction : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        wolfCatchedPlayer = false;
         twigManager = TwigManager.instance;
         temperatureTemplate = TemperatureTemplate.instance;
 
