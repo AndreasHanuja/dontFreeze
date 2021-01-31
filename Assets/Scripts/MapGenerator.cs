@@ -39,6 +39,7 @@ namespace DontFreeze.MapEditor
             for (int i = 0; i < map.worldObjectLists.Count; i++)
             {
                 int j = 0;
+                Debug.Log(i + " " + map.worldObjectLists[i].worldObjects.Count);
                 while (j < instantiationAmmount[i] && map.worldObjectLists[i].worldObjects.Count > 0)
                 {
                     int pos = (int)Random.Range(0, map.worldObjectLists[i].worldObjects.Count - 0.1f);

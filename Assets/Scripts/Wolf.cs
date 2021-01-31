@@ -61,7 +61,7 @@ public class Wolf : MonoBehaviour
 
     private void UpdateModes()
     {
-        if (currentMode == WolfStates.IDLE && Vector3.SqrMagnitude(player.transform.position - transform.position) < looseAgroDistance * looseAgroDistance)
+        if (Vector3.SqrMagnitude(player.transform.position - transform.position) > looseAgroDistance * looseAgroDistance)
         {
             currentMode = WolfStates.IDLE;
         }
@@ -89,7 +89,7 @@ public class Wolf : MonoBehaviour
         }
 
         float minDistance = float.MaxValue;
-        foreach(GameObject g in campFires)
+        foreach(GameObject g in TemperatureTemplate.instance.campFires)
         {
             minDistance = Mathf.Min(minDistance, Vector3.SqrMagnitude(transform.position - g.transform.position));
         }
@@ -125,6 +125,20 @@ public class Wolf : MonoBehaviour
                 //currentTargetPoint = player.transform.position;
                 currentTargetPoint = player.transform.position;
                 break;
+            case WolfStates.FEARFIRE:
+                float minDistance = float.MaxValue;
+                GameObject minCampfire = null;
+                foreach (GameObject g in TemperatureTemplate.instance.campFires)
+                {
+                    if (Vector3.SqrMagnitude(transform.position - g.transform.position) < minDistance)
+                    {
+                        minDistance = Vector3.SqrMagnitude(transform.position - g.transform.position);
+                        minCampfire = g;
+                    }
+                }
+                currentTargetPoint = transform.position + (transform.position - minCampfire.transform.position);
+                spawnPoint = minCampfire.transform.position;
+                break;
         }
     }
 
@@ -148,9 +162,13 @@ public class Wolf : MonoBehaviour
     }
     private void MoveForward()
     {
-        if(!Physics.Raycast(new Ray(transform.position, transform.forward), 2))
+        if(!Physics.Raycast(new Ray(transform.position, transform.forward), 1.2f))
         {
             transform.position += transform.forward * currentMoveSpeed * Time.deltaTime;
+        }
+        if (Vector3.SqrMagnitude(player.transform.position - transform.position) < 4)
+        {
+            Interaction.wolfCatchedPlayer = true;
         }
     }
 }
