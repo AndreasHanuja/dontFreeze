@@ -369,10 +369,10 @@ RectTransform:
   m_Father: {fileID: 1624024292}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -508.3, y: 281.3}
-  m_SizeDelta: {x: 55.37075, y: 55.37075}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 35, y: -35}
+  m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &147377659
 MonoBehaviour:
@@ -665,12 +665,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -1003,8 +1003,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 1121260828}
   cam: {fileID: 3162593}
-  speed: 6
+  speed: 5.6
   turnSmoothTime: 0.1
+  currentMoveSpeed: 0
 --- !u!143 &1121260828
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1074,6 +1075,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movement: {fileID: 1121260827}
+  animator: {fileID: 987673469420992934}
 --- !u!1 &1170850437
 GameObject:
   m_ObjectHideFlags: 0
@@ -1172,10 +1174,10 @@ RectTransform:
   m_Father: {fileID: 850398103}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1664195249
 GameObject:
@@ -1280,6 +1282,7 @@ GameObject:
   - component: {fileID: 2025824455}
   - component: {fileID: 2025824457}
   - component: {fileID: 2025824456}
+  - component: {fileID: 2025824458}
   m_Layer: 5
   m_Name: Twig Count
   m_TagString: Untagged
@@ -1301,10 +1304,10 @@ RectTransform:
   m_Father: {fileID: 1624024292}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -452.93, y: 281.3}
-  m_SizeDelta: {x: 55.372665, y: 39.773003}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 90, y: -35}
+  m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2025824456
 MonoBehaviour:
@@ -1328,18 +1331,18 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 25
+    m_FontSize: 28
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 50
-    m_Alignment: 1
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 100
+  m_Text: 21
 --- !u!222 &2025824457
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1348,6 +1351,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2025824454}
   m_CullTransparentMesh: 0
+--- !u!114 &2025824458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2025824454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &2061422207
 GameObject:
   m_ObjectHideFlags: 0
@@ -1474,6 +1492,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1121260829}
     m_Modifications:
+    - target: {fileID: 47778861329368668, guid: 162c6fcda441ec64a892383f1aa6a04c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8504727292674245115, guid: 162c6fcda441ec64a892383f1aa6a04c, type: 3}
       propertyPath: m_Name
       value: Lumberjack
@@ -1488,7 +1510,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9028886869233589057, guid: 162c6fcda441ec64a892383f1aa6a04c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.5
+      value: -1.1
       objectReference: {fileID: 0}
     - target: {fileID: 9028886869233589057, guid: 162c6fcda441ec64a892383f1aa6a04c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1524,6 +1546,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 162c6fcda441ec64a892383f1aa6a04c, type: 3}
+--- !u!95 &987673469420992934 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4377351815568834064, guid: 162c6fcda441ec64a892383f1aa6a04c, type: 3}
+  m_PrefabInstance: {fileID: 987673469420992933}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8140791842979521252 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9028886869233589057, guid: 162c6fcda441ec64a892383f1aa6a04c, type: 3}
