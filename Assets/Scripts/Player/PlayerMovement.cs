@@ -55,5 +55,12 @@ public class PlayerMovement : MonoBehaviour
 
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
         }
+
+        RaycastHit hit;
+        if (Physics.Raycast(new Ray(transform.position + Vector3.up, Vector3.down), out hit, 5, 1 << 8))
+        {
+            transform.GetChild(1).transform.localPosition = new Vector3(0, hit.point.y - 1f,0);
+        }
+        transform.position = new Vector3(transform.position.x,1, transform.position.z);
     }
 }

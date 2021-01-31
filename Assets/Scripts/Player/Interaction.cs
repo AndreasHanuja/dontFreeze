@@ -143,13 +143,13 @@ public class Interaction : MonoBehaviour
 
         if (twigManager.twigCount > 4)
         {
-            Vector3 playerPosition = transform.position + (transform.forward * 2.25f);
+            Vector3 playerPosition = transform.position + (transform.forward * 3);
             playerPosition.y = 0.5f;
 
             //Update UI for twig
             blockInteractionUntil = Time.realtimeSinceStartup + 1;
             twigManager.twigCount -= 5;
-            instanciatedCampFire = Instantiate(campFire, playerPosition, transform.rotation);
+            instanciatedCampFire = GameObject.Instantiate(campFire, null);
             temperatureTemplate.campFires.Add(instanciatedCampFire);
             StartCoroutine(AnimatedSpawnCampfire(instanciatedCampFire, playerPosition));
 
@@ -159,7 +159,7 @@ public class Interaction : MonoBehaviour
 
     IEnumerator AnimatedSpawnCampfire(GameObject campfire, Vector3 campfirePos)
     {
-        for(float f = 0; f < 1; f += Time.deltaTime)
+        for(float f = 0; f < 1; f += Time.deltaTime * 4)
         {
             campfire.transform.localScale = Vector3.Slerp(Vector3.zero, Vector3.one, f);
             campfire.transform.position = Vector3.Slerp(transform.position, campfirePos, f);
@@ -167,6 +167,7 @@ public class Interaction : MonoBehaviour
         }
         campfire.transform.localScale = Vector3.Slerp(Vector3.zero, Vector3.one, 1);
         campfire.transform.position = Vector3.Slerp(transform.position, campfirePos, 1);
+        campfire.transform.GetChild(0).gameObject.SetActive(true);
     }
 
 }

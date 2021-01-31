@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class CampFireDuration : MonoBehaviour
 {
-    public GameObject campFireOut;
-
     TemperatureTemplate temperatureTemplate;
 
     public float campDuration = 5.0f;
@@ -13,20 +11,28 @@ public class CampFireDuration : MonoBehaviour
     private void Start()
     {
         temperatureTemplate = TemperatureTemplate.instance;
-    }
-
-    private void Update()
-    {
         StartCoroutine(TurnOffCamp());
     }
 
 
     IEnumerator TurnOffCamp()
     {
+        float range = 10;
+        for(float f = 0; f<campDuration; f += 0.25f)
+        {
+            transform.GetChild(2).GetComponent<Light>().intensity = Random.Range(0.7f, 1.2f);
+            transform.GetChild(3).GetComponent<Light>().intensity = Random.Range(4f, 6f);
+            yield return new WaitForSeconds(0.25f);
+        }
+        for (float f = 0; f < 1; f += Time.deltaTime )
+        {
+            transform.GetChild(2).GetComponent<Light>().intensity = Mathf.Lerp(1,0,f);
+            transform.GetChild(3).GetComponent<Light>().intensity = Mathf.Lerp(5, 0, f);
+            yield return new WaitForEndOfFrame();
+        }
+        transform.GetChild(2).gameObject.SetActive(false);
+        transform.GetChild(3).gameObject.SetActive(false);
 
-        yield return new WaitForSeconds(campDuration);
-        Instantiate(campFireOut, transform.position, transform.rotation);
         temperatureTemplate.campFires.Remove(this.gameObject);
-        Destroy(this.gameObject);
     }
 }
