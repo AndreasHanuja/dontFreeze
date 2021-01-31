@@ -156,7 +156,8 @@ public class Interaction : MonoBehaviour
             playerMovement.blockMovementUntil = Time.realtimeSinceStartup + 0.7f;
             blockInteractionUntil = Time.realtimeSinceStartup + 0.7f;
             playerAnimator.SetTrigger("Chop");
-            //TODO play sound
+
+            ChopSound.playChop = true;
 
             if (tree.GetComponent<Tree>().HitTree()){
                 treeList.treeList.Remove(nearestTree);

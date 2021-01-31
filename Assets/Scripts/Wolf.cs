@@ -75,7 +75,7 @@ public class Wolf : MonoBehaviour
         {
             currentMoveSpeed = runSpeed;
             animator.SetBool("walk", false);
-            //TODO play sound
+            ChopSound.playWolf = true;
             currentMode = WolfStates.CHAISE;
         }        
 
