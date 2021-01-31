@@ -22,7 +22,7 @@ public class Tree : MonoBehaviour
         Vector3 oldPosition = transform.position;
         if (health == 0)
         {
-            for (float f = 0; f < 1; f += Time.deltaTime)
+            for (float f = 0; f < 1; f += Time.deltaTime*1.5f)
             {
                 if (f <0.75f)
                 {
@@ -41,7 +41,7 @@ public class Tree : MonoBehaviour
         }
         else {
             Vector2 targetRotation = new Vector2(Random.Range(-1, 1), Random.Range(-1, 1)).normalized * 10;
-            for (float f = 0; f < 1; f += Time.deltaTime)
+            for (float f = 0; f < 1; f += Time.deltaTime * 1.5f)
             {
                 if (f < 0.25f)
                 {
