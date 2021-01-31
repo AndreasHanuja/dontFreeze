@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
 
     public CharacterController controller;
+    public float blockMovementUntil;
 
     public Transform cam;
 
@@ -21,6 +22,12 @@ public class PlayerMovement : MonoBehaviour
     {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
+
+        if(blockMovementUntil - Time.realtimeSinceStartup > 0)
+        {
+            horizontal = 0;
+            vertical = 0;
+        }
 
         Vector3 cameraDirection = Camera.main.transform.forward;
         cameraDirection.y = 0;

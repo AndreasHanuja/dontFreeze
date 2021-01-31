@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class Interaction : MonoBehaviour
 {
+    private PlayerMovement playerMovement;
+    private Animator playerAnimator;
+    private float blockInteractionUntil;
+
     public Transform player;
     public TreeList treeList;
 
@@ -38,7 +42,8 @@ public class Interaction : MonoBehaviour
         twigManager = TwigManager.instance;
         temperatureTemplate = TemperatureTemplate.instance;
 
-
+        playerMovement = gameObject.GetComponent<PlayerMovement>();
+        playerAnimator = transform.GetChild(1).GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -50,6 +55,10 @@ public class Interaction : MonoBehaviour
         //else if not isChopTreeMode and Input.GetKeyDown(KeyCode.E) and you have wood -> PutDownCampFire
         twigCounter.text = twigManager.twigCount.ToString();
 
+        if(blockInteractionUntil - Time.realtimeSinceStartup >0)
+        {
+            return;
+        }
         float minSqrtDistanceToTree = float.MaxValue;
 
 
@@ -73,8 +82,7 @@ public class Interaction : MonoBehaviour
             chopIcon.gameObject.SetActive(false);
             isChopTreeMode = false;
             campFireIcon.gameObject.SetActive(true);
-            campFireIcon.interactable = twigManager.twigCount > 0;
-
+            campFireIcon.interactable = twigManager.twigCount > 4;
         }
 
         if (Input.GetKeyDown(KeyCode.E))
@@ -117,38 +125,48 @@ public class Interaction : MonoBehaviour
             Vector3 nearestTree = treeList.treeList[closestTreeIndex];
             GameObject tree = treeList.trees[closestTreeIndex];
 
-            treeList.treeList.Remove(nearestTree);
-            treeList.trees.Remove(tree);
+            playerMovement.blockMovementUntil = Time.realtimeSinceStartup + 1;
+            blockInteractionUntil = Time.realtimeSinceStartup + 1;
+            playerAnimator.SetTrigger("Chop");
 
-            Destroy(tree);
-
+            if(tree.GetComponent<Tree>().HitTree()){
+                treeList.treeList.Remove(nearestTree);
+                treeList.trees.Remove(tree);
+            }
             twigManager.AddTwig();
         }
 
     }
 
-
-
-
     void PutDownCampFire()
     {
-       
-            if (twigManager.twigCount == 0)
-            {
-               
-            }
-            else
-            {
-                Vector3 playerPosition = transform.position + (transform.forward * 2);
-                playerPosition.y = 0.5f;
 
-                //Update UI for twig
-                twigManager.RemoveTwig();
-                instanciatedCampFire = Instantiate(campFire, playerPosition, transform.rotation);
-                temperatureTemplate.campFires.Add(instanciatedCampFire);
-            }
-        
+        if (twigManager.twigCount > 4)
+        {
+            Vector3 playerPosition = transform.position + (transform.forward * 2.25f);
+            playerPosition.y = 0.5f;
+
+            //Update UI for twig
+            blockInteractionUntil = Time.realtimeSinceStartup + 1;
+            twigManager.twigCount -= 5;
+            instanciatedCampFire = Instantiate(campFire, playerPosition, transform.rotation);
+            temperatureTemplate.campFires.Add(instanciatedCampFire);
+            StartCoroutine(AnimatedSpawnCampfire(instanciatedCampFire, playerPosition));
+
+        }
+
     }
 
+    IEnumerator AnimatedSpawnCampfire(GameObject campfire, Vector3 campfirePos)
+    {
+        for(float f = 0; f < 1; f += Time.deltaTime)
+        {
+            campfire.transform.localScale = Vector3.Slerp(Vector3.zero, Vector3.one, f);
+            campfire.transform.position = Vector3.Slerp(transform.position, campfirePos, f);
+            yield return new WaitForEndOfFrame();
+        }
+        campfire.transform.localScale = Vector3.Slerp(Vector3.zero, Vector3.one, 1);
+        campfire.transform.position = Vector3.Slerp(transform.position, campfirePos, 1);
+    }
 
 }
