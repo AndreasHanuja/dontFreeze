@@ -10,6 +10,8 @@ namespace DontFreeze.MapEditor
     {
         private Map map;
 
+        public static GameObject house;
+
         public GameObject[] tilePrefabs;
         public GameObject[] objectPrefabs;
         public int[] instantiationAmmount;
@@ -58,6 +60,12 @@ namespace DontFreeze.MapEditor
                             tree.transform.position = estimatedPos;
                             treeList.treeList.Add(tree.transform.position);
                             map.worldObjectLists[i].worldObjects.RemoveAt(pos);
+                            break;
+                        case 4:
+                            GameObject house = GameObject.Instantiate(objectPrefabs[i], tileInstanceParent);
+                            house.transform.position = estimatedPos;
+                            map.worldObjectLists[i].worldObjects.RemoveAt(pos);
+                            MapGenerator.house = house;
                             break;
                         default:
                             GameObject g = GameObject.Instantiate(objectPrefabs[i], tileInstanceParent);
