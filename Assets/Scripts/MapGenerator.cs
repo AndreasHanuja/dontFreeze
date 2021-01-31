@@ -44,6 +44,11 @@ namespace DontFreeze.MapEditor
                     FixGroundY(ref estimatedPos);
                     switch (i)
                     {
+                        case 1:
+                            GameObject wolf = GameObject.Instantiate(objectPrefabs[i], tileInstanceParent);
+                            wolf.transform.position = estimatedPos + Vector3.up;
+                            map.worldObjectLists[i].worldObjects.RemoveAt(pos);
+                            break;
                         case 3:
                             playerTransform.position = estimatedPos + Vector3.up;
                             break;

@@ -14,12 +14,13 @@ public class PlayerMovement : MonoBehaviour
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
 
+    public float currentMoveSpeed;
 
     // Update is called once per frame
     void Update()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
 
         Vector3 cameraDirection = Camera.main.transform.forward;
         cameraDirection.y = 0;
@@ -29,10 +30,14 @@ public class PlayerMovement : MonoBehaviour
         cameraDirectionRight.y = 0;
         cameraDirectionRight.Normalize();
 
-        Vector3 direction = (cameraDirection * vertical + cameraDirectionRight * horizontal).normalized;
-
+        Vector3 direction = (cameraDirection * vertical + cameraDirectionRight * horizontal);
+        if (direction.magnitude > 1)
+        {
+            direction.Normalize();
+        }
+        currentMoveSpeed = direction.magnitude;
         // Animation transition should be inserted here
-        if(direction.magnitude >= 0.1f)
+        if (direction.magnitude >= 0.1f)
         {
             float targetangle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetangle, ref turnSmoothVelocity, turnSmoothTime);
@@ -43,6 +48,5 @@ public class PlayerMovement : MonoBehaviour
 
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
         }
-
     }
 }

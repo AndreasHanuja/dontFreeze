@@ -24,6 +24,7 @@ public class Wolf : MonoBehaviour
     public float fearFireDistance;
     public float maxMoveTime;
     public float maxIdleDistance;
+    public float looseAgroDistance;
 
     private Vector3 currentTargetPoint;
 
@@ -32,6 +33,7 @@ public class Wolf : MonoBehaviour
 
     private void Start() {
         spawnPoint = transform.position;
+        player = GameObject.Find("Player").transform;
     }
 
     private void Update()
@@ -59,17 +61,15 @@ public class Wolf : MonoBehaviour
 
     private void UpdateModes()
     {
-        if (Vector3.SqrMagnitude(player.transform.position - transform.position) > playerAggroDistance * playerAggroDistance)
+        if (currentMode == WolfStates.IDLE && Vector3.SqrMagnitude(player.transform.position - transform.position) < looseAgroDistance * looseAgroDistance)
         {
             currentMode = WolfStates.IDLE;
         }
-        else
+            
+        if (currentMode == WolfStates.IDLE && Vector3.SqrMagnitude(player.transform.position - transform.position) < playerAggroDistance * playerAggroDistance)
         {
-            if(currentMode == WolfStates.IDLE)
-            {
-                currentMode = WolfStates.CHAISE;
-            }
-        }
+            currentMode = WolfStates.CHAISE;
+        }        
 
         if (currentMode == WolfStates.CHAISE && Vector3.SqrMagnitude(player.transform.position - transform.position) < circleDistance * circleDistance)
         {
@@ -117,7 +117,7 @@ public class Wolf : MonoBehaviour
                 difPoint.y = 0;
                 difPoint.Normalize();
                 //transform.for
-                float goalRotation = Mathf.Atan2(difPoint.z, difPoint.x) * Mathf.Rad2Deg + 15;
+                float goalRotation = Mathf.Atan2(difPoint.z, difPoint.x) * Mathf.Rad2Deg + (circleClockwise?-10:10);
                 Vector3 goalPosition = new Vector3(Mathf.Cos(goalRotation * Mathf.Deg2Rad), 0, Mathf.Sin(goalRotation * Mathf.Deg2Rad));
                 currentTargetPoint = player.transform.position - goalPosition * circleDistance;
                 break;
